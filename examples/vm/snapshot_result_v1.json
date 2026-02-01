@@ -1,11 +1,14 @@
 {
   "schema_version": "v1",
   "result_id": "snapres_20260131_001",
-  "provider_id": "hyperv_local",
-  "target": { "vm_id": "vm-clarity-test-01", "vm_name": "ClarityTest01" },
+  "request_id": "snapreq_20260131_001",
+  "provider_id": "virtualbox_local",
+  "provider_kind": "virtualbox",
+  "target": { "vm_id": "ClarityTest01", "vm_name": "ClarityTest01" },
   "action": "created",
-  "provider_snapshot_id": "hyperv:snapshot:12345",
-  "created_at_utc": "2026-01-31T19:10:10Z",
+  "status": "ok",
+  "occurred_at_utc": "2026-01-31T19:10:10Z",
+  "provider_snapshot_id": "virtualbox:snapshot:pre_load_plan_checkpoint",
   "determinism_class": "D1",
   "notes": "Snapshot created before load plan commit."
 }
