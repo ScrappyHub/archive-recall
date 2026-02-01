@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Archive Recall Importer Manifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "name",
+    "version",
+    "provider_kind",
+    "determinism_class",
+    "capabilities",
+    "input_constraints",
+    "output_constraints",
+    "legal_posture",
+    "parameters_schema"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "enum": ["v1"] },
+    "name": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "version": { "type": "string", "minLength": 1, "maxLength": 64 },
+
+    "provider_kind": { "type": "string", "enum": ["spotify", "youtube", "filesystem", "other"] },
+
+    "binary_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+
+    "determinism_class": { "type": "string", "enum": ["D0", "D1", "D2"] },
+
+    "capabilities": {
+      "type": "object",
+      "required": ["filesystem_read", "filesystem_write", "network", "device_access"],
+      "properties": {
+        "filesystem_read": { "type": "boolean" },
+        "filesystem_write": { "type": "boolean" },
+        "network": { "type": "boolean" },
+        "device_access": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+
+    "input_constraints": { "type": "object" },
+    "output_constraints": {
+      "type": "object",
+      "required": ["produces_overlay_manifest"],
+      "properties": {
+        "produces_overlay_manifest": { "type": "boolean" },
+        "produces_objects": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+
+    "legal_posture": {
+      "type": "object",
+      "required": ["drm_bypass", "notes"],
+      "properties": {
+        "drm_bypass": { "type": "boolean", "enum": [false] },
+        "notes": { "type": "string", "minLength": 1, "maxLength": 2000 }
+      },
+      "additionalProperties": false
+    },
+
+    "parameters_schema": { "type": "object" }
+  },
+  "additionalProperties": false
+}
