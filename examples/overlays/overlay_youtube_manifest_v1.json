@@ -1,0 +1,19 @@
+{
+  "schema_version": "v1",
+  "overlay_id": "ov_youtube_20260131_001",
+  "provider": { "name": "YouTube", "kind": "youtube" },
+  "captured_at_utc": "2026-01-31T19:05:00Z",
+  "source": { "method": "user_export_file", "input_object_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" },
+  "collections": [
+    {
+      "collection_id": "yt_pl_1",
+      "title": "Watch Later (mirror)",
+      "items": [
+        { "ref_id": "youtube:video:abcd", "kind": "video" }
+      ]
+    }
+  ],
+  "references": [
+    { "ref_id": "youtube:playlist:WL", "url": "https://www.youtube.com/playlist?list=WL", "kind": "youtube" }
+  ]
+}
