@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>ArchiveRecall.Cli</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ArchiveRecall.Cli</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\engine\ArchiveRecall.Engine\ArchiveRecall.Engine.csproj" />
+  </ItemGroup>
+</Project>
