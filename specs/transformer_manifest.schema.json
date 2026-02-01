@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Archive Recall Transformer Manifest",
+  "type": "object",
+  "required": ["name", "version", "deterministic", "capabilities", "parameters_schema", "input_constraints", "output_constraints"],
+  "properties": {
+    "name": { "type": "string", "minLength": 1 },
+    "version": { "type": "string", "minLength": 1 },
+    "deterministic": { "type": "boolean" },
+    "capabilities": {
+      "type": "object",
+      "required": ["filesystem_read", "filesystem_write", "network", "device_access"],
+      "properties": {
+        "filesystem_read": { "type": "boolean" },
+        "filesystem_write": { "type": "boolean" },
+        "network": { "type": "boolean" },
+        "device_access": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "parameters_schema": { "type": "object" },
+    "input_constraints": { "type": "object" },
+    "output_constraints": { "type": "object" },
+    "rollback": {
+      "type": "object",
+      "properties": {
+        "strategy": { "type": "string", "enum": ["staged_commit", "checkpoint_restore"] }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}
