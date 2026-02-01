@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Archive Recall Overlay Manifest",
+  "type": "object",
+  "required": ["schema_version", "overlay_id", "provider", "captured_at_utc", "source", "collections", "references"],
+  "properties": {
+    "schema_version": { "type": "string", "enum": ["v1"] },
+    "overlay_id": { "type": "string", "minLength": 8, "maxLength": 128 },
+    "provider": {
+      "type": "object",
+      "required": ["name", "kind"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "kind": { "type": "string", "enum": ["spotify", "youtube", "other"] }
+      },
+      "additionalProperties": false
+    },
+    "captured_at_utc": { "type": "string", "format": "date-time" },
+    "source": {
+      "type": "object",
+      "required": ["method", "input_object_sha256"],
+      "properties": {
+        "method": { "type": "string", "enum": ["api_export", "user_export_file", "manual_entry"] },
+        "input_object_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      },
+      "additionalProperties": false
+    },
+    "collections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["collection_id", "title", "items"],
+        "properties": {
+          "collection_id": { "type": "string", "minLength": 1 },
+          "title": { "type": "string", "minLength": 1 },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["ref_id", "kind"],
+              "properties": {
+                "ref_id": { "type": "string", "minLength": 1 },
+                "kind": { "type": "string", "enum": ["track", "video", "playlist_item", "other"] }
+              },
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["ref_id", "url", "kind"],
+        "properties": {
+          "ref_id": { "type": "string", "minLength": 1 },
+          "url": { "type": "string", "minLength": 1 },
+          "kind": { "type": "string", "enum": ["spotify", "youtube", "other"] }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": false
+}
