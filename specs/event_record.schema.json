@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Archive Recall Event Record",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "event_id",
+    "event_type",
+    "occurred_at_utc",
+    "actor",
+    "inputs",
+    "outputs",
+    "policy",
+    "capabilities",
+    "integrity",
+    "prev_event_hash",
+    "event_hash"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "enum": ["v1"] },
+
+    "event_id": { "type": "string", "minLength": 8, "maxLength": 128 },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "IMPORT_DISCOVERED",
+        "IMPORT_INGESTED",
+        "OVERLAY_DISCOVERED",
+        "OVERLAY_INGESTED",
+        "OVERLAY_UPDATED",
+        "TRANSFORM_PLANNED",
+        "TRANSFORM_APPLIED",
+        "LOAD_PLANNED",
+        "LOAD_STAGED",
+        "LOAD_COMMITTED",
+        "VERIFY_PASSED",
+        "VERIFY_FAILED",
+        "HEALTH_STATUS_CHANGED",
+        "CHECKPOINT_CREATED",
+        "ROLLBACK_RESTORED",
+        "SNAPSHOT_REQUESTED",
+        "SNAPSHOT_CREATED",
+        "SNAPSHOT_RESTORED",
+        "SNAPSHOT_EXPORTED",
+        "SNAPSHOT_FAILED",
+        "QUARANTINE_SET",
+        "QUARANTINE_CLEARED",
+        "REPLAY_MISMATCH",
+        "OPERATION_DENIED"
+      ]
+    },
+
+    "occurred_at_utc": { "type": "string", "format": "date-time" },
+
+    "actor": {
+      "type": "object",
+      "required": ["kind", "id"],
+      "properties": {
+        "kind": { "type": "string", "enum": ["user", "automation", "system"] },
+        "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "display": { "type": "string", "minLength": 1, "maxLength": 256 }
+      },
+      "additionalProperties": false
+    },
+
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "id"],
+        "properties": {
+          "kind": { "type": "string", "enum": ["object", "tree", "overlay", "policy", "plan", "snapshot", "mount"] },
+          "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+        },
+        "additionalProperties": false
+      }
+    },
+
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "id"],
+        "properties": {
+          "kind": { "type": "string", "enum": ["object", "tree", "overlay", "policy", "plan", "snapshot", "health_report"] },
+          "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+        },
+        "additionalProperties": false
+      }
+    },
+
+    "policy": {
+      "type": "object",
+      "required": ["decision", "policy_id", "reason_codes"],
+      "properties": {
+        "decision": { "type": "string", "enum": ["ALLOW", "DENY"] },
+        "policy_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "reason_codes": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 128 } }
+      },
+      "additionalProperties": false
+    },
+
+    "capabilities": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 64 }
+    },
+
+    "integrity": {
+      "type": "object",
+      "required": ["determinism_class", "expected_replay", "verification"],
+      "properties": {
+        "determinism_class": { "type": "string", "enum": ["D0", "D1", "D2"] },
+        "expected_replay": { "type": "boolean" },
+        "verification": {
+          "type": "object",
+          "required": ["hashes_verified", "structure_verified"],
+          "properties": {
+            "hashes_verified": { "type": "boolean" },
+            "structure_verified": { "type": "boolean" },
+            "mismatch_details": { "type": "object" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "refs": {
+      "type": "object",
+      "properties": {
+        "transformer": {
+          "type": "object",
+          "required": ["name", "version"],
+          "properties": {
+            "name": { "type": "string", "minLength": 1, "maxLength": 128 },
+            "version": { "type": "string", "minLength": 1, "maxLength": 64 },
+            "binary_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+            "manifest_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+          },
+          "additionalProperties": false
+        },
+        "importer": {
+          "type": "object",
+          "required": ["name", "version"],
+          "properties": {
+            "name": { "type": "string", "minLength": 1, "maxLength": 128 },
+            "version": { "type": "string", "minLength": 1, "maxLength": 64 },
+            "binary_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+            "manifest_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+          },
+          "additionalProperties": false
+        },
+        "snapshot_provider": {
+          "type": "object",
+          "required": ["provider_id"],
+          "properties": {
+            "provider_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+            "provider_kind": { "type": "string", "minLength": 1, "maxLength": 64 },
+            "manifest_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "details": { "type": "object" },
+
+    "prev_event_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "event_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  },
+  "additionalProperties": false
+}
