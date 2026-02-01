@@ -4,17 +4,17 @@ namespace ArchiveRecall.Engine.Contracts;
 
 /// <summary>
 /// Snapshot providers are pluggable.
-/// Snapshot request/result are canonical JSON artifacts (recommended: stored as objects in ObjectStore).
-/// Provider selection is policy-controlled.
+/// CANONICAL (locked):
+/// - Snapshot request JSON MUST be stored in IObjectStore (sha256 identity).
+/// - Snapshot result JSON MUST be stored in IObjectStore (sha256 identity).
+/// - Events MUST reference request/result objects in inputs/outputs with sha256 set.
+/// - Exported artifact hashes are optional, but if present MUST be stored in IObjectStore.
 /// </summary>
 public interface ISnapshotProvider
 {
     string ProviderId { get; }
     string ProviderKind { get; } // "virtualbox" | "hyperv" | "vmware" | ...
 
-    /// <summary>
-    /// Provider manifest reference (canonical artifact sha256).
-    /// </summary>
     SnapshotProviderManifestRef ManifestRef { get; }
 
     Task<SnapshotResultRef> CreateSnapshotAsync(
@@ -32,8 +32,8 @@ public interface ISnapshotProvider
     );
 
     /// <summary>
-    /// Optional: materialize/export snapshot to an artifact and return its object ref.
-    /// If export is supported, exported artifact hashes must be recorded (canonical optional).
+    /// Optional: export/materialize snapshot into an artifact.
+    /// If export is supported and executed, exported artifact MUST be stored in IObjectStore and returned here.
     /// </summary>
     Task<(SnapshotResultRef Result, SnapshotExport? Export)> ExportSnapshotAsync(
         OperationContext ctx,
