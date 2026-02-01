@@ -1,0 +1,33 @@
+{
+  "schema_version": "v1",
+  "name": "normalize_filenames",
+  "version": "v1",
+  "determinism_class": "D0",
+  "binary_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "capabilities": {
+    "filesystem_read": true,
+    "filesystem_write": true,
+    "network": false,
+    "device_access": false
+  },
+  "parameters_schema": {
+    "type": "object",
+    "required": ["strip_illegal"],
+    "properties": {
+      "strip_illegal": { "type": "boolean" },
+      "style": { "type": "string", "enum": ["none", "title_case", "lowercase"] }
+    },
+    "additionalProperties": false
+  },
+  "input_constraints": {
+    "input_kind": ["object", "tree"]
+  },
+  "output_constraints": {
+    "does_not_change_content_hash": false,
+    "may_change_paths_only": true
+  },
+  "rollback": {
+    "strategy": "staged_commit",
+    "notes": "Writes staged rename plan and commits atomically; rollback restores prior tree reference."
+  }
+}
