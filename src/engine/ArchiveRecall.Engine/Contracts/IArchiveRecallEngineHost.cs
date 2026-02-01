@@ -1,9 +1,5 @@
 namespace ArchiveRecall.Engine.Contracts;
 
-/// <summary>
-/// Composition root contract. This is what GOS can host later.
-/// The Host exposes core services and provider registries.
-/// </summary>
 public interface IArchiveRecallEngineHost
 {
     IJournal Journal { get; }
@@ -18,4 +14,12 @@ public interface IArchiveRecallEngineHost
 
     ITransformerRegistry Transformers { get; }
     IImporterRegistry Importers { get; }
+
+    ISnapshotOrchestrator SnapshotOps { get; }
+    ILoadOrchestrator LoadOps { get; }
+    IOverlayOrchestrator OverlayOps { get; }
+    IFolderPolicyOrchestrator FolderPolicyOps { get; }
+    IQuarantineManager Quarantine { get; }
+    IHealthEngine Health { get; }
+    IReplayVerifier Replay { get; }
 }
