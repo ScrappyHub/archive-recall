@@ -1,0 +1,32 @@
+{
+  "schema_version": "v1",
+  "name": "spotify_metadata_importer",
+  "version": "v1",
+  "provider_kind": "spotify",
+  "binary_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "determinism_class": "D1",
+  "capabilities": {
+    "filesystem_read": true,
+    "filesystem_write": false,
+    "network": false,
+    "device_access": false
+  },
+  "input_constraints": {
+    "requires_user_export_file": true
+  },
+  "output_constraints": {
+    "produces_overlay_manifest": true,
+    "produces_objects": false
+  },
+  "legal_posture": {
+    "drm_bypass": false,
+    "notes": "Imports user-provided Spotify export/metadata into an Overlay Manifest. Does not download audio."
+  },
+  "parameters_schema": {
+    "type": "object",
+    "properties": {
+      "profile_label": { "type": "string" }
+    },
+    "additionalProperties": false
+  }
+}
