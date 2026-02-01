@@ -23,9 +23,12 @@ Events may be sealed into a hash chain:
 - each event references prior_event_hash
 - seal artifacts can be produced per session
 
-- ## Snapshot event payloads
-Snapshot operations MUST reference:
-- inputs: snapshot request object sha256 (if stored) or request_id
-- outputs: snapshot result object sha256 (if stored) or result_id
-- store snapshot request/result JSON as library objects (sha256 identity)
+## Snapshot event payloads (Canonical)
+Snapshot operations MUST:
+- store snapshot request JSON as library objects (sha256 identity)
+- store snapshot result JSON as library objects (sha256 identity)
 - reference them in Event inputs/outputs with sha256 set
+
+Exported snapshot artifact hashes are optional:
+- if an export artifact is materialized, it MUST be stored as a library object and may be referenced in outputs.
+
