@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Archive Recall VM Snapshot Request",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "request_id",
+    "provider_id",
+    "provider_kind",
+    "target",
+    "action",
+    "label",
+    "requested_at_utc"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "enum": ["v1"] },
+    "request_id": { "type": "string", "minLength": 8, "maxLength": 128 },
+    "provider_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "provider_kind": { "type": "string", "enum": ["virtualbox", "hyperv", "vmware", "qemu", "other"] },
+    "target": {
+      "type": "object",
+      "required": ["vm_id"],
+      "properties": {
+        "vm_id": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "vm_name": { "type": "string", "minLength": 1, "maxLength": 256 }
+      },
+      "additionalProperties": false
+    },
+    "action": { "type": "string", "enum": ["create", "restore", "export"] },
+    "label": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "requested_at_utc": { "type": "string", "format": "date-time" },
+    "options": { "type": "object" }
+  },
+  "additionalProperties": false
+}
