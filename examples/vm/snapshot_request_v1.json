@@ -1,9 +1,11 @@
 {
   "schema_version": "v1",
   "request_id": "snapreq_20260131_001",
-  "provider_id": "hyperv_local",
-  "target": { "vm_id": "vm-clarity-test-01", "vm_name": "ClarityTest01" },
+  "provider_id": "virtualbox_local",
+  "provider_kind": "virtualbox",
+  "target": { "vm_id": "ClarityTest01", "vm_name": "ClarityTest01" },
   "action": "create",
   "label": "pre_load_plan_checkpoint",
-  "captured_at_utc": "2026-01-31T19:10:00Z"
+  "requested_at_utc": "2026-01-31T19:10:00Z",
+  "options": { "include_memory_state": false }
 }
