@@ -1,0 +1,17 @@
+# build outputs
+bin/
+obj/
+artifacts/
+
+# user-specific
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# OS
+.DS_Store
+Thumbs.db
+
+# logs
+*.log
