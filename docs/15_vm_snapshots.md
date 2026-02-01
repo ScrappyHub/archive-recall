@@ -32,6 +32,21 @@ Snapshot providers are pluggable:
   - target identifiers
   - integrity signals (if provider can supply)
   - optional exported artifact hashes if snapshot is materialized as a file
+ 
+  - ## Provider strategy (v1)
+Archive Recall supports multiple snapshot providers through the same contract.
+
+For v1 development, Archive Recall will ship a provider implementation for:
+- virtualbox (default baseline)
+
+Additional providers can be added without contract changes:
+- hyperv
+- vmware
+
+Provider selection is a policy decision:
+- policy may allow only a subset of providers
+- policy may deny restore even if create is allowed
+
 
 ## Events
 - SNAPSHOT_REQUESTED
