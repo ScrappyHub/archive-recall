@@ -1,0 +1,20 @@
+{
+  "schema_version": "v1",
+  "overlay_id": "ov_spotify_20260131_001",
+  "provider": { "name": "Spotify", "kind": "spotify" },
+  "captured_at_utc": "2026-01-31T19:00:00Z",
+  "source": { "method": "user_export_file", "input_object_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" },
+  "collections": [
+    {
+      "collection_id": "pl_1",
+      "title": "Daily Rotation",
+      "items": [
+        { "ref_id": "spotify:track:123", "kind": "track" },
+        { "ref_id": "spotify:track:456", "kind": "track" }
+      ]
+    }
+  ],
+  "references": [
+    { "ref_id": "spotify:playlist:999", "url": "https://open.spotify.com/playlist/999", "kind": "spotify" }
+  ]
+}
