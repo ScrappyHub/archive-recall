@@ -11,19 +11,18 @@ public sealed record SnapshotProviderManifestRef(
 );
 
 /// <summary>
-/// Snapshot Request/Result are canonical JSON artifacts:
-/// - validate against specs/vm_snapshot_request.schema.json and specs/vm_snapshot_result.schema.json
-/// - store as objects in the library store (sha256 identity)
-/// - reference as inputs/outputs in events with sha256 set (canonical)
+/// CANONICAL (locked):
+/// Snapshot Request and Result JSON MUST be stored as objects in IObjectStore (sha256 identity).
+/// Events MUST reference them in inputs/outputs with sha256 set.
 /// </summary>
 public sealed record SnapshotRequestRef(
     string RequestId,
-    ObjectRef? StoredObject // optional: present when stored as object (canonical recommended)
+    ObjectRef StoredObject
 );
 
 public sealed record SnapshotResultRef(
     string ResultId,
-    ObjectRef? StoredObject // optional: present when stored as object (canonical recommended)
+    ObjectRef StoredObject
 );
 
 public sealed record SnapshotTarget(
@@ -31,6 +30,10 @@ public sealed record SnapshotTarget(
     string? VmName
 );
 
+/// <summary>
+/// Optional: some providers can materialize/export a snapshot into an artifact file.
+/// If exported, that artifact MUST be stored in IObjectStore (sha256 identity) and may be referenced by events.
+/// </summary>
 public sealed record SnapshotExport(
     ObjectRef ExportedArtifact,
     string? Notes
