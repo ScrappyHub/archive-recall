@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Archive Recall Load Plan",
+  "type": "object",
+  "required": ["schema_version", "plan_id", "target", "operations", "staging", "verification"],
+  "properties": {
+    "schema_version": { "type": "string", "enum": ["v1"] },
+    "plan_id": { "type": "string", "minLength": 8, "maxLength": 128 },
+    "target": {
+      "type": "object",
+      "required": ["mount_id", "capabilities_required"],
+      "properties": {
+        "mount_id": { "type": "string", "minLength": 1 },
+        "capabilities_required": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      },
+      "additionalProperties": false
+    },
+    "operations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["op", "source_sha256", "dest_path"],
+        "properties": {
+          "op": { "type": "string", "enum": ["copy", "move", "write_tree", "delete"] },
+          "source_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "dest_path": { "type": "string", "minLength": 1 },
+          "transform_chain": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "version", "params"],
+              "properties": {
+                "name": { "type": "string" },
+                "version": { "type": "string" },
+                "params": { "type": "object" }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "staging": {
+      "type": "object",
+      "required": ["enabled", "staging_path"],
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "staging_path": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "verification": {
+      "type": "object",
+      "required": ["verify_hashes", "verify_structure"],
+      "properties": {
+        "verify_hashes": { "type": "boolean" },
+        "verify_structure": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
