@@ -1,0 +1,12 @@
+{
+  "schema_version": "v1",
+  "policy_id": "fp_music_only_v1_20260131",
+  "scope": { "path": "D:\\Library\\Music", "recursive": true },
+  "allowed_types": [
+    { "data_type": "music", "match": { "extensions": [".mp3", ".flac", ".wav", ".m4a"], "mime_prefixes": ["audio/"] } }
+  ],
+  "enforcement": { "mode": "isolate", "on_disallowed": "isolate" },
+  "transforms": [
+    { "transformer_name": "normalize_filenames", "transformer_version": "v1", "params": { "style": "title_case", "strip_illegal": true } }
+  ]
+}
