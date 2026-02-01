@@ -1,0 +1,20 @@
+{
+  "schema_version": "v1",
+  "plan_id": "lp_device_load_v1_20260131",
+  "target": {
+    "mount_id": "mount_usb_001",
+    "capabilities_required": ["filesystem.read", "filesystem.write", "device.mount"]
+  },
+  "operations": [
+    {
+      "op": "copy",
+      "source_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "dest_path": "\\MUSIC\\Artist\\Album\\01 - Track.mp3",
+      "transform_chain": [
+        { "name": "normalize_filenames", "version": "v1", "params": { "strip_illegal": true } }
+      ]
+    }
+  ],
+  "staging": { "enabled": true, "staging_path": "E:\\.ar_staging" },
+  "verification": { "verify_hashes": true, "verify_structure": true }
+}
