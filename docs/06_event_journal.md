@@ -29,4 +29,3 @@ Snapshot operations MUST reference:
 - outputs: snapshot result object sha256 (if stored) or result_id
 - store snapshot request/result JSON as library objects (sha256 identity)
 - reference them in Event inputs/outputs with sha256 set
-
