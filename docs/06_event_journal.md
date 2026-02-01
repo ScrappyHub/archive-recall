@@ -22,3 +22,11 @@ Events are append-only. No edits. Corrections are new events.
 Events may be sealed into a hash chain:
 - each event references prior_event_hash
 - seal artifacts can be produced per session
+
+- ## Snapshot event payloads
+Snapshot operations MUST reference:
+- inputs: snapshot request object sha256 (if stored) or request_id
+- outputs: snapshot result object sha256 (if stored) or result_id
+- store snapshot request/result JSON as library objects (sha256 identity)
+- reference them in Event inputs/outputs with sha256 set
+
