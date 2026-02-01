@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Archive Recall VM Snapshot Provider Manifest",
+  "type": "object",
+  "required": ["schema_version", "provider_id", "provider_kind", "capabilities", "determinism_class"],
+  "properties": {
+    "schema_version": { "type": "string", "enum": ["v1"] },
+    "provider_id": { "type": "string", "minLength": 4, "maxLength": 128 },
+    "provider_kind": { "type": "string", "enum": ["hyperv", "vmware", "virtualbox", "qemu", "other"] },
+    "capabilities": {
+      "type": "object",
+      "required": ["snapshot_create", "snapshot_restore", "snapshot_export"],
+      "properties": {
+        "snapshot_create": { "type": "boolean" },
+        "snapshot_restore": { "type": "boolean" },
+        "snapshot_export": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "determinism_class": { "type": "string", "enum": ["D0", "D1", "D2"] },
+    "constraints": { "type": "object" }
+  },
+  "additionalProperties": false
+}
